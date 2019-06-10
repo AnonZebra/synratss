@@ -1,0 +1,17 @@
+Package: synratss
+Type: Package
+Title: Handles data from synesthesia consistency test
+Version: 0.1.0
+Author: Lowe Wilsson
+Maintainer: Lowe Wilsson <lowe.wilsson@ki.se>
+Description: The main function is consistency_scoring, which uses the other
+    functions in the package. It calculates consistency scores for data from
+    an online consistency test (see e.g. Rothen, Seth, Witzel, & Ward, 2013)
+    and produces plots for each data set/participant. This package was
+    developed for use at the Center of Neurodevelopmental Disorders at
+    Karolinska Institutet (KIND), under the supervision of Janina Neufeld. Its
+    applicability is highly narrow and specific.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
