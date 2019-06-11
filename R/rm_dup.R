@@ -22,7 +22,7 @@
 #' y = c(3, 1, 4, 8, 10, 8, 9, 10, 11))
 #' rm_dup(df, "x")
 
-rm_dup <- function(df, ind_col, keep_last=FALSE, rm_na=FALSE) {
+rm_dup <- function(df, ind_col, keep_last=FALSE) {
   man_df <- cbind(df, keepord=1:nrow(df))
   ord_var <- order(man_df[, ind_col])
   ord_df <- man_df[ord_var, ]
