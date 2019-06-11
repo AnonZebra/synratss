@@ -15,6 +15,10 @@ have a user name in them in the format "<digit/digits>_<single digit>"
 somewhere in them, extracts only the user names and returns a vector
 with those.
 }
+\examples{
+foo <- c("Twin202_2", "313_5", "1_2", "1_1", "randomchars12_2fillout")
+clean_usern(foo)
+}
 \seealso{
 \code{\link[stringr]{str_extract}}
 }

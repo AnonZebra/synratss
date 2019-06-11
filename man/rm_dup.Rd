@@ -15,13 +15,16 @@ to be searched for duplicate entries}
 \item{keep_last}{logical value indicating if the last, instead
 of the first, of each set of duplicates should be retained. defaults
 to FALSE, i.e. to retaining the first of each set of duplicates.}
+
+\item{rm_na}{logical value. if set to TRUE, rows with NA in the
+specified column are removed.}
 }
 \description{
 Finds all rows in a data frame which share the same
 entry for a column and returns a data frame where only the first
-or last of each set of duplicates is retained. Note that if there
-are multiple NA entries in the column, only the first/last of
-these rows will be retained as well.
+or last of each set of duplicates is retained. Rows with
+NA entries in the column are left as they are (even if there are
+multiple NA's).
 }
 \examples{
 df <- data.frame(x = c(1, 3, 1, 1, 5, 8, 5, 9, 10),
