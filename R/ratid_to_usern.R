@@ -23,6 +23,10 @@
 ratid_to_usern <- function(ratid) {
   rawn <- ratid
   rawn <- gsub(" ", "", rawn)
+  if (is.na(rawn)) {
+    warning(paste("I was passed a NA value"))
+    return(NA)
+  }
   if (nchar(rawn) != 12) {
     warning(paste("Wrong format, I was passed this ID:", ratid))
     return(NA)}
