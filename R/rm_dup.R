@@ -2,9 +2,9 @@
 #'
 #' @description Finds all rows in a data frame which share the same
 #' entry for a column and returns a data frame where only the first
-#' or last of each set of duplicates is retained. Note that if there
-#' are multiple NA entries in the column, only the first/last of
-#' these rows will be retained as well.
+#' or last of each set of duplicates is retained. Rows with
+#' NA entries in the column are left as they are (even if there are
+#' multiple NA's).
 #'
 #' @param df data frame
 #' @param ind_col character value giving the name of the column
@@ -12,6 +12,8 @@
 #' @param keep_last logical value indicating if the last, instead
 #' of the first, of each set of duplicates should be retained. defaults
 #' to FALSE, i.e. to retaining the first of each set of duplicates.
+#' @param rm_na logical value. if set to TRUE, rows with NA in the
+#' specified column are removed.
 #'
 #' @seealso \code{\link[base]{order}}
 #'
@@ -20,7 +22,7 @@
 #' y = c(3, 1, 4, 8, 10, 8, 9, 10, 11))
 #' rm_dup(df, "x")
 
-rm_dup <- function(df, ind_col, keep_last=FALSE) {
+rm_dup <- function(df, ind_col, keep_last=FALSE, rm_na=FALSE) {
   man_df <- cbind(df, keepord=1:nrow(df))
   ord_var <- order(man_df[, ind_col])
   ord_df <- man_df[ord_var, ]
@@ -28,13 +30,15 @@ rm_dup <- function(df, ind_col, keep_last=FALSE) {
   dup_ind <- c()
   if (keep_last == FALSE) {
     for (i in 2:nrow(ord_df)) { #for loop that gets the position of all duplicates (including NA values)
-      if (ord_df[i, ind_col] == ord_df[i-1, ind_col]) {
+      if (any(is.na(ord_df[i], ord_df[i-1]))) {}
+      else if (ord_df[i, ind_col] == ord_df[i-1, ind_col]) {
         dup_ind <- c(dup_ind, i)
       }
     }
   }
   else if (keep_last == TRUE) {
     for (i in 1:(nrow(ord_df)-1)) {
+      if (any(is.na(ord_df[i], ord_df[i+1]))) {}
       if (ord_df[i, ind_col] == ord_df[i+1, ind_col]) {
         dup_ind <- c(dup_ind, i)
       }
