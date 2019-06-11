@@ -59,9 +59,9 @@ consistency_scoring <- function(pfp, pdir=NULL, method = "euclidean", fmt = "Luv
     out[1, 40] <- mean(out[1,c(1:26, 30:39)], na.rm = TRUE) # calculates the "mean of per-item summed differences" for the participant (excluding umlaut letters)
     out[1, 41] <- mean(out[1,1:26], na.rm = TRUE) # for letters A-Z only, calculates the "mean of per-item summed differences" for the participant
     out[1, 42] <- mean(out[1,30:39], na.rm = TRUE) # for digits 0-9 only, calculates the "mean of per-item summed differences" for the participant
-    out[1, 43] <- sum(is.na(out[1,c(1:26, 30:39)])) # calculates for how many items there are 3 valid responses, excluding umlaut letters
-    out[1, 44] <- sum(is.na(out[1,1:26])) # calculates for how many letters there are 3 valid responses, excluding umlaut letters
-    out[1, 45] <- sum(is.na(out[1,30:39])) # calculates for how many digits there are 3 valid responses
+    out[1, 43] <- sum(!is.na(out[1,c(1:26, 30:39)])) # calculates for how many items there are 3 valid responses, excluding umlaut letters
+    out[1, 44] <- sum(!is.na(out[1,1:26])) # calculates for how many letters there are 3 valid responses, excluding umlaut letters
+    out[1, 45] <- sum(!is.na(out[1,30:39])) # calculates for how many digits there are 3 valid responses
     out[1, 46] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "black", byrow = TRUE) #calculates proportion of items for which all responses were "black", excluding umlaut letters
     out[1, 47] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "blue", byrow = TRUE)
     out[1, 48] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "hazy", byrow = TRUE)
@@ -86,7 +86,7 @@ consistency_scoring <- function(pfp, pdir=NULL, method = "euclidean", fmt = "Luv
   df_total <- cbind(dat[, 5], dat[, 3], df_total)
   colnames(df_total) <- c("PROFILEID", "cons_test_time", # sets column names
                           LETTERS, "Å", "Ä", "Ö", 0:9,
-                          "part_mean", "part_mean_A_Z", "part_mean_0_9",
+                          "part_mean_tot", "part_mean_A_Z", "part_mean_0_9",
                           "three_resp_tot", "three_resp_A_Z", "three_resp_0_9",
                           "prop_black_tot", "prop_blue_tot",
                           "prop_hazy_tot", "prop_white_tot",
