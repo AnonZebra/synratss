@@ -30,7 +30,7 @@ rm_dup <- function(df, ind_col, keep_last=FALSE) {
   dup_ind <- c()
   if (keep_last == FALSE) {
     for (i in 2:nrow(ord_df)) { #for loop that gets the position of all duplicates (including NA values)
-      if (any(is.na(ord_df[i]), is.na(ord_df[i-1]))) {}
+      if (any(is.na(ord_df[i, ind_col]), is.na(ord_df[i-1, ind_col]))) {}
       else if (ord_df[i, ind_col] == ord_df[i-1, ind_col]) {
         dup_ind <- c(dup_ind, i)
       }
@@ -38,7 +38,7 @@ rm_dup <- function(df, ind_col, keep_last=FALSE) {
   }
   else if (keep_last == TRUE) {
     for (i in 1:(nrow(ord_df)-1)) {
-      if (any(is.na(ord_df[i]), is.na(ord_df[i-1]))) {}
+      if (any(is.na(ord_df[i, ind_col]), is.na(ord_df[i-1, ind_col]))) {}
       if (ord_df[i, ind_col] == ord_df[i+1, ind_col]) {
         dup_ind <- c(dup_ind, i)
       }
