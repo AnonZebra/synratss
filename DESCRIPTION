@@ -1,7 +1,7 @@
 Package: synratss
 Type: Package
 Title: Handles data from synesthesia consistency test
-Version: 0.1.0
+Version: 0.1
 Author: Lowe Wilsson
 Maintainer: Lowe Wilsson <lowe.wilsson@ki.se>
 Description: The main function is consistency_scoring, which uses the other
@@ -11,6 +11,9 @@ Description: The main function is consistency_scoring, which uses the other
     developed for use at the Center of Neurodevelopmental Disorders at
     Karolinska Institutet (KIND), under the supervision of Janina Neufeld. Its
     applicability is highly narrow and specific.
+Depends: ggplot2 (>= 3.1.1)
+Imports: 
+    stringr
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
