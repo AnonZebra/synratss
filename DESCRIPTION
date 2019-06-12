@@ -4,16 +4,22 @@ Title: Handles data from synesthesia consistency test
 Version: 0.1
 Author: Lowe Wilsson
 Maintainer: Lowe Wilsson <lowe.wilsson@ki.se>
-Description: The main function is consistency_scoring, which uses the other
+Description: The main function is \code{consistency_scoring()}, which uses the other
     functions in the package. It calculates consistency scores for data from
     an online consistency test (see e.g. Rothen, Seth, Witzel, & Ward, 2013)
-    and produces plots for each data set/participant. This package was
-    developed for use at the Center of Neurodevelopmental Disorders at
-    Karolinska Institutet (KIND), under the supervision of Janina Neufeld. Its
+    and produces plots for each data set/participant. You can also use the 
+    \code{plot_syn_cons()} function on its own (it is otherwise called by the 
+    \code{consistency_scoring()} function). The \code{cbind_matches()} function
+    is used for combining data frames of different lengths, a common scenario
+    working with twins data from different sources where you want to e.g. link 
+    entries/rows in one data frame with those of another, using a key variable such as 
+    user name or study ID. This package was developed for use at the Center of 
+    Neurodevelopmental Disorders at Karolinska Institutet (KIND). Its
     applicability is highly narrow and specific.
-Depends: ggplot2 (>= 3.1.1)
+Depends: R (>= 3.6.0)
 Imports: 
-    stringr
+    ggplot2 (>= 3.1.1)
+    stringr (>= 1.4.0)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
