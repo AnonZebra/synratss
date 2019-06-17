@@ -24,29 +24,29 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   y_up_lim <- ifelse(max(plotdf$Sum_distance, na.rm = TRUE) == -Inf,
                      5,
                      max(plotdf$Sum_distance, na.rm = TRUE))
-  myplot <- ggplot(data=plotdf, aes(x=Character, y=Sum_distance)) +
-    geom_col(fill="black", color="black", width=0.5) + #produces columns using the aes() arguments from the ggplot call
-    geom_hline(yintercept=135.30, color="blue") + #adds a horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
-    labs(x="Grapheme", y="Sum distance between responses") + #x- and y-axis titles
-    scale_x_discrete(labels=NULL) + #removes titles for the x axis values/ticks
-    scale_y_continuous(breaks=round(seq(0,
+  myplot <- ggplot2::ggplot(data=plotdf, aes(x=Character, y=Sum_distance)) +
+    ggplot2::geom_col(fill="black", color="black", width=0.5) + #produces columns using the aes() arguments from the ggplot call
+    ggplot2::geom_hline(yintercept=135.30, color="blue") + #adds a horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
+    ggplot2::labs(x="Grapheme", y="Sum distance between responses") + #x- and y-axis titles
+    ggplot2::scale_x_discrete(labels=NULL) + #removes titles for the x axis values/ticks
+    ggplot2::scale_y_continuous(breaks=round(seq(0,
                                         y_up_lim,
                                         length.out = 10),
                                     -floor(log10(y_up_lim)))
     ) + #specifies y axis ticks/breaks
-    geom_text(y=-y_up_lim * 0.04, label=plotdf$Character, size = 3.5, #adds first line of graphemes
+    ggplot2::geom_text(y=-y_up_lim * 0.04, label=plotdf$Character, size = 3.5, #adds first line of graphemes
               color = hexcolors[, 2]) +
-    geom_text(y=-y_up_lim * 0.08, label=plotdf$Character, size = 3.5, #adds second line of graphemes
+    ggplot2::geom_text(y=-y_up_lim * 0.08, label=plotdf$Character, size = 3.5, #adds second line of graphemes
               color = hexcolors[, 3]) +
-    geom_text(y=-y_up_lim * 0.12, label=plotdf$Character, size = 3.5, #adds third line of graphemes
+    ggplot2::geom_text(y=-y_up_lim * 0.12, label=plotdf$Character, size = 3.5, #adds third line of graphemes
               color = hexcolors[, 4]) +
-    theme(axis.ticks.x=element_blank(), #removes x axis ticks
+    ggplot2::theme(axis.ticks.x=element_blank(), #removes x axis ticks
           panel.grid.major.x=element_blank(), #removes vertical grid lines
           panel.grid.minor.y=element_blank()) + #removes the smaller horizontal grid lines
-    coord_cartesian(y = c(-y_up_lim / 10,
+    ggplot2::coord_cartesian(y = c(-y_up_lim / 10,
                           y_up_lim)) #specifies y axis limits
   if (!is.null(savepath)){
-    ggsave(savepath)
+    ggplot2::ggsave(savepath)
   }
 
   if (tovar==TRUE){
