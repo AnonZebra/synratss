@@ -24,7 +24,7 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   y_up_lim <- ifelse(max(plotdf$Sum_distance, na.rm = TRUE) == -Inf,
                      5,
                      max(plotdf$Sum_distance, na.rm = TRUE))
-  myplot <- ggplot2::ggplot(data=plotdf, aes(x=Character, y=Sum_distance)) +
+  myplot <- ggplot2::ggplot(data=plotdf, ggplot2::aes(x=Character, y=Sum_distance)) +
     ggplot2::geom_col(fill="black", color="black", width=0.5) + #produces columns using the aes() arguments from the ggplot call
     ggplot2::geom_hline(yintercept=135.30, color="blue") + #adds a horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
     ggplot2::labs(x="Grapheme", y="Sum distance between responses") + #x- and y-axis titles
@@ -40,9 +40,9 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
               color = hexcolors[, 3]) +
     ggplot2::geom_text(y=-y_up_lim * 0.12, label=plotdf$Character, size = 3.5, #adds third line of graphemes
               color = hexcolors[, 4]) +
-    ggplot2::theme(axis.ticks.x=element_blank(), #removes x axis ticks
-          panel.grid.major.x=element_blank(), #removes vertical grid lines
-          panel.grid.minor.y=element_blank()) + #removes the smaller horizontal grid lines
+    ggplot2::theme(axis.ticks.x=ggplot2::element_blank(), #removes x axis ticks
+          panel.grid.major.x=ggplot2::element_blank(), #removes vertical grid lines
+          panel.grid.minor.y=ggplot2::element_blank()) + #removes the smaller horizontal grid lines
     ggplot2::coord_cartesian(y = c(-y_up_lim / 10,
                           y_up_lim)) #specifies y axis limits
   if (!is.null(savepath)){
