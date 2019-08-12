@@ -4,23 +4,21 @@
 \alias{consistency_scoring}
 \title{Calculate consistency scores}
 \usage{
-consistency_scoring(pfp, pdir = NULL, method = "euclidean",
+consistency_scoring(pfp, plotdir = NULL, method = "euclidean",
   fmt = "Luv")
 }
 \arguments{
-\item{pdir}{directory path for directory to put plots in (optional)}
+\item{pfp}{participant data csv file path (has to be formatted with
+comma "," separator, and have a header), e. g.
+"/Users/myname/Data_folder/bokstaverochsiffror.csv"}
 
-\item{method}{method for use in color space distance calculations
+\item{plotdir}{directory path for directory to put plots in (optional)}
+
+\item{method}{method to use in color space distance calculations
 ("euclidean" for Euclidean distances, "manhattan" for
 Manhattan/city block distances - "euclidean" is standard)}
 
 \item{fmt}{fmt: specifies color format/space to be used ("sRGB", "Luv")}
-
-\item{dfp}{participant data csv file path (has to be formatted with
-comma "," separator, and have a header), e. g.
-"/Users/myname/Data_folder/bokstaverochsiffror.csv"}
-
-\item{savepath}{(optional) file path for saving produced plot}
 }
 \description{
 Calculates consistency scores using data from a consistency
