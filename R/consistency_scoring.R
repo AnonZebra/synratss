@@ -1,18 +1,18 @@
 #' @title Calculate consistency scores
 #'
 #' @description Calculates consistency scores using data from a consistency
-#' test for synesthesia. Can also create plots for each data set using the
-#' plot_syn_cons function.
+#' test for synesthesia. Can also create plots for each data set (using the
+#' synratss::plot_syn_cons function).
 #'
 #' @param pfp participant data csv file path (has to be formatted with
 #' comma "," separator, and have a header), e. g.
 #' "/Users/myname/Data_folder/bokstaverochsiffror.csv"
-#' @param plotdir directory path for directory to put plots in (optional)
+#' @param plotdir (optional) directory path for directory to put plots in
 #' @param method method to use in color space distance calculations
 #' ("euclidean" for Euclidean distances, "manhattan" for
 #' Manhattan/city block distances - "euclidean" is standard)
-#' @param fmt fmt: specifies color format/space to be used ("sRGB", "Luv")
-#'
+#' @param fmt specifies color format/space to be used ("sRGB", "Luv")
+#' @param nameby (optional) name, in quotes, of column to name output plots by, e. g. "USERNAME"
 #' @seealso \code{\link[synratss]{prop_col}} \code{\link[synratss]{dist_sum}}
 #' \code{\link[synratss]{plot_syn_cons}}
 #'
@@ -20,7 +20,8 @@
 #'
 
 
-consistency_scoring <- function(pfp, plotdir=NULL, method="euclidean", fmt="Luv") {
+consistency_scoring <- function(pfp, plotdir=NULL, method="euclidean",
+                                fmt="Luv", nameby=NULL) {
   dat <- read.csv(pfp, stringsAsFactors=FALSE, header=TRUE,
                   na.strings=c(" ", "", "NA"), encoding="UTF-8")
   dat[dat=="------"] <- NA # "------" represents "no color" choices, which is recoded here as NA
@@ -78,8 +79,13 @@ consistency_scoring <- function(pfp, plotdir=NULL, method="euclidean", fmt="Luv"
 
     df_total <- rbind(df_total, out)
     if (!is.null(plotdir)) {
-      plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
-                    savepath=paste(plotdir, "/Consistency plot ", foo, ".pdf", sep=""))
+      if (is.null(nameby)) {
+        plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
+                      savepath=paste(plotdir, "/Consistency plot ", foo, ".pdf", sep=""))
+      } else {
+        plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
+                      savepath=paste(plotdir, "/Consistency plot ", str(dat[foo, nameby]), ".pdf", sep=""))
+      }
     }
 
   }
