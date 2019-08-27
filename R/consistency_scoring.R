@@ -84,7 +84,7 @@ consistency_scoring <- function(pfp, plotdir=NULL, method="euclidean",
                       savepath=paste(plotdir, "/Consistency plot ", foo, ".pdf", sep=""))
       } else {
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
-                      savepath=paste(plotdir, "/Consistency plot ", str(dat[foo, nameby]), ".pdf", sep=""))
+                      savepath=paste(plotdir, "/Consistency plot ", as.character(dat[foo, nameby]), ".pdf", sep=""))
       }
     }
 
