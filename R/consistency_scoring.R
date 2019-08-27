@@ -75,7 +75,7 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
 
     df_total <- rbind(df_total, out)
     if (!is.null(plotdir)) {
-      if (!is.null(nameby)) {
+      if (is.null(nameby)) {
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
                       savepath=paste(plotdir, "/Consistency plot ", foo, ".pdf", sep=""))
       } else {
