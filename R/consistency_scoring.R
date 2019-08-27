@@ -4,9 +4,7 @@
 #' test for synesthesia. Can also create plots for each data set (using the
 #' synratss::plot_syn_cons function).
 #'
-#' @param pfp participant data csv file path (has to be formatted with
-#' comma "," separator, and have a header), e. g.
-#' "/Users/myname/Data_folder/bokstaverochsiffror.csv"
+#' @param part_df participant consistency test raw data frame
 #' @param plotdir (optional) directory path for directory to put plots in
 #' @param method method to use in color space distance calculations
 #' ("euclidean" for Euclidean distances, "manhattan" for
@@ -20,16 +18,14 @@
 #'
 
 
-consistency_scoring <- function(pfp, plotdir=NULL, method="euclidean",
+consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
                                 fmt="Luv", nameby=NULL) {
-  dat <- read.csv(pfp, stringsAsFactors=FALSE, header=TRUE,
-                  na.strings=c(" ", "", "NA"), encoding="UTF-8")
-  dat[dat=="------"] <- NA # "------" represents "no color" choices, which is recoded here as NA
-  symbols <- grep("^symbol", names(dat))
+  part_df[part_df=="------"] <- NA # "------" represents "no color" choices, which is recoded here as NA
+  symbols <- grep("^symbol", names(part_df))
   df_total <- data.frame()
 
-  for (foo in 1:nrow(dat)){
-    dat1 <-dat[foo,]
+  for (foo in 1:nrow(part_df)){
+    dat1 <-part_df[foo,]
     hexcolors <- data.frame(letter=c(LETTERS, "Å", "Ä", "Ö", 0:9), rep1=NA, rep2=NA, rep3=NA,
                             stringsAsFactors=FALSE)
     gather_data <- data.frame(ID=rep(dat1[, "ID"], each=length(symbols)), ##This forms a new data frame with the single participant's data, with rows representing one response instance each, and columns for 1 ID 2 symbol 3 chosen color 4 position 5 timing
@@ -84,12 +80,12 @@ consistency_scoring <- function(pfp, plotdir=NULL, method="euclidean",
                       savepath=paste(plotdir, "/Consistency plot ", foo, ".pdf", sep=""))
       } else {
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
-                      savepath=paste(plotdir, "/Consistency plot ", as.character(dat[foo, nameby]), ".pdf", sep=""))
+                      savepath=paste(plotdir, "/Consistency plot ", as.character(part_df[foo, nameby]), ".pdf", sep=""))
       }
     }
 
   }
-  df_total <- cbind(dat[, 5], dat[, 3], df_total)
+  df_total <- cbind(part_df[, 5], part_df[, 3], df_total)
   colnames(df_total) <- c("PROFILEID", "cons_test_time", # sets column names
                           LETTERS, "Å", "Ä", "Ö", 0:9,
                           "part_mean_tot", "part_mean_A_Z", "part_mean_0_9",
