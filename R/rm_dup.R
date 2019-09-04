@@ -1,10 +1,11 @@
 #' @title Remove duplicates from a data frame
 #'
 #' @description Finds all rows in a data frame which share the same
-#' entry for a column and returns a data frame where only the first
+#' entry for a target column and returns a data frame where only the first
 #' or last of each set of duplicates is retained. Rows with
 #' NA entries in the column are left as they are (even if there are
-#' multiple NA's).
+#' multiple NA's). If no duplicates are found, the data frame is returned
+#' as-is.
 #'
 #' @param df data frame
 #' @param ind_col character value giving the name of the column
@@ -35,8 +36,7 @@ rm_dup <- function(df, ind_col, keep_last=FALSE) {
         dup_ind <- c(dup_ind, i)
       }
     }
-  }
-  else if (keep_last == TRUE) {
+  } else {
     for (i in 1:(nrow(ord_df)-1)) {
       if (any(is.na(ord_df[i, ind_col]), is.na(ord_df[i-1, ind_col]))) {}
       if (ord_df[i, ind_col] == ord_df[i+1, ind_col]) {
@@ -44,10 +44,13 @@ rm_dup <- function(df, ind_col, keep_last=FALSE) {
       }
     }
   }
-  clean_df <- ord_df[-dup_ind, ]
+  if (!is.null(dup_ind)) {
+    clean_df <- ord_df[-dup_ind, ]
 
-  end_ord_var <- order(clean_df$keepord)
-  res_df <- clean_df[end_ord_var, -ncol(clean_df)]
+    end_ord_var <- order(clean_df$keepord)
+    res_df <- clean_df[end_ord_var, -ncol(clean_df)]
 
-  return(res_df)
+    return(res_df)
+  }
+  return(df)
 }
