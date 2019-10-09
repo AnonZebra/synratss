@@ -23,7 +23,7 @@ prop_col <- function(hexdf, col = "black", byrow = FALSE) {
   }
   else {cat("unsupported color")}
   if (isTRUE(byrow)) {
-    bool <- apply(bool, 1, function(x) sum(x) == 3) # checks for each row in bool if all its elements are TRUE (ie in the "non-allowed" color span), and if so producing TRUE, otherwise FALSE, putting the values in "bool" (forming a logical vector)
+    bool <- apply(bool, 1, all) # checks for each row in bool if all its elements are TRUE (ie in the "non-allowed" color span), and if so producing TRUE, otherwise FALSE, putting the values in "bool" (forming a logical vector)
   }
   propcol <- sum(bool, na.rm = TRUE)/length(bool[!is.na(bool)]) # calculates proportion of answers that are of the color being checked for
   return(propcol)
