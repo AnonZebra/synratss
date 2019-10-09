@@ -18,6 +18,8 @@ clean_usern <- function(vec) {
     warning("Not all vector elements have a <non-zero number>_<non-zero digit> pattern in them. Returning NULL.")
     return(NULL)
   }
+  ocd_usern <- grepl("ocd", vec, ignore.case=TRUE)
   res <- sapply(vec, function(x) stringr::str_extract(x, "[1-9]+[0-9]*_[1-9]"))
+  res[ocd_usern] <- paste0("OCD", res[ocd_usern])
   return(as.vector(res))
 }

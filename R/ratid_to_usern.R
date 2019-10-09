@@ -34,5 +34,8 @@ ratid_to_usern <- function(ratid) {
   fam_no <- sub("^0*", "", fam_no)
   twin_no <- substr(rawn, 8, 8)
   usern <- paste(fam_no, "_", twin_no, sep="")
+  if (grepl("^19", ratid)) {
+    usern <- paste("OCD", usern, sep="")
+  }
   return(usern)
 }
