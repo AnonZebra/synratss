@@ -56,9 +56,9 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
     out[1, 40] <- mean(out[1,c(1:26, 30:39)], na.rm=TRUE) # calculates the "mean of per-item summed differences" for the participant (excluding umlaut letters)
     out[1, 41] <- mean(out[1,1:26], na.rm=TRUE) # for letters A-Z only, calculates the "mean of per-item summed differences" for the participant
     out[1, 42] <- mean(out[1,30:39], na.rm=TRUE) # for digits 0-9 only, calculates the "mean of per-item summed differences" for the participant
-    out[1, 43] <- sum(!is.na(out[1,c(1:26, 30:39)])) # calculates for how many items there are 3 valid responses, excluding umlaut letters
-    out[1, 44] <- sum(!is.na(out[1,1:26])) # calculates for how many letters there are 3 valid responses, excluding umlaut letters
-    out[1, 45] <- sum(!is.na(out[1,30:39])) # calculates for how many digits there are 3 valid responses
+    out[1, 43] <- sum(!is.na(out[1,c(1:26, 30:39)])) # calculates for how many items there are 3 color responses, excluding umlaut letters
+    out[1, 44] <- sum(!is.na(out[1,1:26])) # calculates for how many letters there are 3 color responses, excluding umlaut letters
+    out[1, 45] <- sum(!is.na(out[1,30:39])) # calculates for how many digits there are 3 color responses
     out[1, 46] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col="black", byrow=TRUE) #calculates proportion of items for which all responses were "black", excluding umlaut letters
     out[1, 47] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col="blue", byrow=TRUE)
     out[1, 48] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col="hazy", byrow=TRUE)
