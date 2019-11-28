@@ -21,10 +21,11 @@ specified column are removed.}
 }
 \description{
 Finds all rows in a data frame which share the same
-entry for a column and returns a data frame where only the first
+entry for a target column and returns a data frame where only the first
 or last of each set of duplicates is retained. Rows with
 NA entries in the column are left as they are (even if there are
-multiple NA's).
+multiple NA's). If no duplicates are found, the data frame is returned
+as-is.
 }
 \examples{
 df <- data.frame(x = c(1, 3, 1, 1, 5, 8, 5, 9, 10),
