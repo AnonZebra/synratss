@@ -1,5 +1,9 @@
-#' @details
+#' synratss
+#'
 #' This package is used at KIND for synesthesia-related research.
 #'
-#' @keywords synesthesia internal KIND RATSS twins
-"_PACKAGE"
+#' @docType package
+#' @name synratss
+#'
+#' @import ggplot2 stringr
+NULL
