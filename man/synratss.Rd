@@ -6,6 +6,7 @@
 \alias{synratss-package}
 \title{synratss}
 \description{
+<<<<<<< HEAD
 This package is used at KIND for synesthesia-related research. The main function is \code{consistency_scoring()}, which uses the other
 functions in the package. It calculates consistency scores for data from
 an online consistency test (see e.g. Rothen, Seth, Witzel, & Ward, 2013)
@@ -18,4 +19,7 @@ entries/rows in one data frame with those of another, using a key variable such 
 user name or study ID. This package was developed for use at the Center of
 Neurodevelopmental Disorders at Karolinska Institutet (KIND). Its
 applicability is highly narrow and specific.
+=======
+This package is used at KIND for synesthesia-related research.
+>>>>>>> 3d4595546b2e9cce064070ae348602eeb040cabf
 }
