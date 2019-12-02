@@ -16,5 +16,5 @@
 #' @docType package
 #' @name synratss
 #'
-#' @import ggplot2 stringr
+#' @import ggplot2 stringr hash
 NULL

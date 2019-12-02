@@ -20,16 +20,23 @@ to FALSE, i.e. to retaining the first of each set of duplicates.}
 specified column are removed.}
 }
 \description{
-Finds all rows in a data frame which share the same
+\code{rm_dup()} finds all rows in a data frame which share the same
 entry for a target column and returns a data frame where only the first
-or last of each set of duplicates is retained. Rows with
-NA entries in the column are left as they are (even if there are
-multiple NA's). If no duplicates are found, the data frame is returned
-as-is.
+or last of each set of duplicates is retained.
+}
+\details{
+\code{rm_dup} finds all rows in a data frame which share the same
+entry for a target column and returns a data frame where. Then for each set of
+duplicates, in a first step, the row with the most non-missing/non-NA values
+is retained. In a second step, if there are duplicate rows where more than one row
+has non-NA values for all columns, either the first (keep_last=FALSE) or the last
+(keep_last=TRUE) row in the set of duplicates is kept. Rows with NA entries in the
+target column are left as they are (even if there are multiple NA's). If no duplicates
+are found, the data frame is returned as-is.
 }
 \examples{
-df <- data.frame(x = c(1, 3, 1, 1, 5, 8, 5, 9, 10),
-y = c(3, 1, 4, 8, 10, 8, 9, 10, 11))
+df <- data.frame(x = c(1, 3, 1, 1, 5, 8, 5, 9, 10, NA),
+y = c(3, 1, 4, 8, 10, 8, 9, 10, 11, 5))
 rm_dup(df, "x")
 
 }
