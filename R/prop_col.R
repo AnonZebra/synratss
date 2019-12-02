@@ -13,6 +13,7 @@
 #'
 #' @seealso \code{\link[synratss]{is_color}}
 #'
+#' @export
 
 prop_col <- function(hexdf, col = "black", byrow = FALSE) {
   if (all(is.na(hexdf))) {

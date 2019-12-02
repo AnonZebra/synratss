@@ -10,7 +10,7 @@
 #'
 #' @seealso \code{\link[grDevices]{col2rgb}}
 #' \code{\link[grDevices]{convertColor}}
-#'
+#' @export
 
 hex_to_cspace <- function(hexcobj, fmt = "sRGB") {
   if (fmt == "sRGB") {

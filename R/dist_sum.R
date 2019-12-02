@@ -10,7 +10,7 @@
 #' - "euclidean" is standard)
 #'
 #' @seealso \code{\link[stats]{dist}} \code{\link[base]{t}}
-#'
+#' @export
 
 dist_sum <- function(x, method = "euclidean") {
   item.score <- sum(dist(t(x), method = method))

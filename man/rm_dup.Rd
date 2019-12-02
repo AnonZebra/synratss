@@ -31,6 +31,7 @@ as-is.
 df <- data.frame(x = c(1, 3, 1, 1, 5, 8, 5, 9, 10),
 y = c(3, 1, 4, 8, 10, 8, 9, 10, 11))
 rm_dup(df, "x")
+
 }
 \seealso{
 \code{\link[base]{order}}

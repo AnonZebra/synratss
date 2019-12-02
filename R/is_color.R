@@ -15,6 +15,8 @@
 #' @param b a two-value vector
 #'
 #' @seealso \code{\link[grDevices]{col2rgb}}
+#'
+#' @export
 
 is_color <- function(hex, col = NULL, r = NULL, g = NULL, b = NULL) {
   if (is.null(col) & (is.null(r) | is.null(g) | is.null(b))) {
