@@ -12,6 +12,7 @@
 #' @examples
 #' foo <- c("Twin202_2", "313_5", "1_2", "1_1", "randomchars12_2fillout")
 #' clean_usern(foo)
+#' @export
 
 clean_usern <- function(vec) {
   if (any(!grepl("[1-9]+[0-9]*_[0-9]", vec))) {
