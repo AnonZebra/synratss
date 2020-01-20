@@ -47,7 +47,7 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
     gather_data <- data.frame(ID = rep(dat1[, "ID"], each = length(symbols)), ##This forms a new data frame with the single participant's data, with rows representing one response instance each, and columns for 1 ID 2 symbol 3 chosen color 4 timing
                               symbol = as.character(dat1[, symbols]),
                               color = paste("#", as.character(dat1[, colors]), sep = ""),
-                              timing = as.character(dat1[, timing]),
+                              timing = as.character(dat1[, timings]),
                               stringsAsFactors = FALSE)
 
     for (i in 1:nrow(hexcolors)) { ##This fills up the hexcolors data frame with response color hexadecimal values for each response
