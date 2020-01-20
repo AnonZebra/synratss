@@ -102,7 +102,7 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
   }
   df_total <- cbind(part_df[, 5], part_df[, 3], df_total)
   colnames(df_total) <- c("PROFILEID", "cons_test_time", # sets column names
-                          LETTERS, "Å", "Ä", "Ö", 0:9,
+                          graphemes,
                           "part_mean_tot", "part_mean_A_Z", "part_mean_0_9",
                           "three_resp_tot", "three_resp_A_Z", "three_resp_0_9",
                           "prop_black_tot", "prop_blue_tot",
