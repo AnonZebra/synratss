@@ -24,7 +24,9 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
                                 fmt="Luv", nameby=NULL, swedish_chars=FALSE,
                                 swedish_weekdays=FALSE) {
   part_df[part_df == "------"] <- NA # "------" represents "no color" choices, which is recoded here as NA
-  symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the color response data is, at KIND)
+  symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the presented grapheme data is, at KIND)
+  timings <- grep("^timing", names(part_df)) # grabs all column names that have "timing" in them (which is where the response timing data is, at KIND)
+  colors <- grep("^color", names(part_df)) # grabs all column names that have "color" in them (which is where the response color data is, at KIND)
   df_total <- data.frame() # initiate empty data frame that is to be filled up with values and then returned by the function
 
   graphemes <- c(LETTERS, as.character(0:9))
@@ -42,11 +44,10 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
     dat1 <- part_df[foo,]
     hexcolors <- data.frame(grapheme = graphemes, rep1 = NA, rep2 = NA, rep3 = NA,
                             stringsAsFactors = FALSE)
-    gather_data <- data.frame(ID = rep(dat1[, "ID"], each = length(symbols)), ##This forms a new data frame with the single participant's data, with rows representing one response instance each, and columns for 1 ID 2 symbol 3 chosen color 4 position 5 timing
+    gather_data <- data.frame(ID = rep(dat1[, "ID"], each = length(symbols)), ##This forms a new data frame with the single participant's data, with rows representing one response instance each, and columns for 1 ID 2 symbol 3 chosen color 4 timing
                               symbol = as.character(dat1[, symbols]),
-                              color = paste("#", as.character(dat1[, symbols - 2]), sep = ""),
-                              position = as.character(dat1[, symbols - 1]),
-                              timing = as.character(dat1[, symbols - 3]),
+                              color = paste("#", as.character(dat1[, colors]), sep = ""),
+                              timing = as.character(dat1[, timing]),
                               stringsAsFactors = FALSE)
 
     for (i in 1:nrow(hexcolors)) { ##This fills up the hexcolors data frame with response color hexadecimal values for each response
