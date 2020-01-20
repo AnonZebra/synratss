@@ -49,7 +49,7 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
                               timing = as.character(dat1[, symbols - 3]),
                               stringsAsFactors = FALSE)
 
-    for (i in 1:39) { ##This fills up the hexcolors data frame with response color hexadecimal values for each response
+    for (i in 1:nrow(hexcolors)) { ##This fills up the hexcolors data frame with response color hexadecimal values for each response
       hexcolors[i, 2:4] <- gather_data$color[gather_data$symbol == hexcolors[i, 1]]
     }
     hexcolors[hexcolors == "#------"] <- NA #converts "no color selected" responses to NA
