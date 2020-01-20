@@ -57,7 +57,7 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
     hexcolors[hexcolors == "#NA"] <- NA
     out <- array(NA, dim = c(1,57)) # "out" is a data frame for storing item consistency and mean consistency per participant values
 
-    for (i in 1:39) {
+    for (i in 1:nrow(hexcolors)) {
       if ( any(is.na(hexcolors[i,2:4])) ) { #if any of the three responses for an item is NA, the total item score is also coded as NA
         item.score <- NA
       }
