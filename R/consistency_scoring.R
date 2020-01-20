@@ -24,10 +24,10 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
                                 fmt="Luv", nameby=NULL, swedish_chars=FALSE,
                                 swedish_weekdays=FALSE) {
   part_df[part_df == "------"] <- NA # "------" represents "no color" choices, which is recoded here as NA
-  symbols <- grep("^symbol", names(part_df))
-  df_total <- data.frame()
+  symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the color response data is, at KIND)
+  df_total <- data.frame() # initiate empty data frame that is to be filled up with values and then returned by the function
 
-  graphemes <- LETTERS
+  graphemes <- c(LETTERS, as.character(0:9))
   if (swedish_chars) {
     swe_letters <- c("Å, Ä, Ö")
     graphemes <- c(graphemes, swe_letters)
