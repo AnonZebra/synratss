@@ -5,7 +5,8 @@
 \title{Calculate consistency scores}
 \usage{
 consistency_scoring(part_df, plotdir = NULL, method = "euclidean",
-  fmt = "Luv", nameby = NULL)
+  fmt = "Luv", nameby = NULL, swedish_chars = FALSE,
+  swedish_weekdays = FALSE)
 }
 \arguments{
 \item{part_df}{participant consistency test raw data frame}
@@ -19,6 +20,10 @@ Manhattan/city block distances - "euclidean" is standard)}
 \item{fmt}{specifies color format/space to be used ("sRGB", "Luv")}
 
 \item{nameby}{(optional) name, in quotes, of column to name output plots by, e. g. "USERNAME"}
+
+\item{swedish_chars}{specify if swedish characters are in the data frame or not}
+
+\item{swedish_weekdays}{specify if swedish weekdays are in the data frame or not}
 }
 \description{
 Calculates consistency scores using data from a consistency
