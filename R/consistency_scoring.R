@@ -59,12 +59,12 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
 
     for (i in 1:nrow(hexcolors)) {
       if ( any(is.na(hexcolors[i,2:4])) ) { #if any of the three responses for an item is NA, the total item score is also coded as NA
-        item.score <- NA
+        item_score <- NA
       }
       else {
         x <- hex_to_cspace(hexcolors[i,2:4], fmt)
-        item.score <- dist_sum(x, method)
-        out[1,i] <- item.score
+        item_score <- dist_sum(x, method)
+        out[1,i] <- item_score
       }
     }
 
