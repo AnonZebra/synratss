@@ -13,6 +13,7 @@
 #' @param nameby (optional) name, in quotes, of column to name output plots by, e. g. "USERNAME"
 #' @param swedish_chars specify if swedish characters are in the data frame or not
 #' @param swedish_weekdays specify if swedish weekdays are in the data frame or not
+#' @param participant_ids a vector for naming output plots. needs to be in the same order as the part_df participants.
 #' @seealso \code{\link[synratss]{prop_col}} \code{\link[synratss]{dist_sum}}
 #' \code{\link[synratss]{plot_syn_cons}}
 #'
@@ -20,18 +21,23 @@
 #'
 
 
-consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
+consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
+                                plotdir=NULL, method="euclidean",
                                 fmt="Luv", nameby=NULL, swedish_chars=FALSE,
-                                swedish_weekdays=FALSE) {
-  part_df[part_df == "------"] <- NA # "------" represents "no color" choices, which is recoded here as NA
+                                swedish_weekdays=FALSE,
+                                participant_ids=NULL) {
+  part_df[part_df == "------" | part_df == "nocolor" | ""] <- NA # "------" represents "no color" choices, which is recoded here as NA
   symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the presented grapheme data is, at KIND)
   timings <- grep("^timing", names(part_df)) # grabs all column names that have "timing" in them (which is where the response timing data is, at KIND)
   colors <- grep("^color", names(part_df)) # grabs all column names that have "color" in them (which is where the response color data is, at KIND)
   df_total <- data.frame() # initiate empty data frame that is to be filled up with values and then returned by the function
 
-  graphemes <- c(LETTERS, as.character(0:9))
+  digits_chr <- as.character(0:9)
+
+  graphemes <- c(LETTERS, digits_chr)
   if (swedish_chars) {
-    swe_letters <- c("Å, Ä, Ö")
+    swe_letters <- c("Å", "Ä", "Ö")
+    swe_alphabet <- c(LETTERS, swe_letters)
     graphemes <- c(graphemes, swe_letters)
   }
   if (swedish_weekdays) {
@@ -55,7 +61,7 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
     }
     hexcolors[hexcolors == "#------"] <- NA #converts "no color selected" responses to NA
     hexcolors[hexcolors == "#NA"] <- NA
-    out <- array(NA, dim = c(1,57)) # "out" is a data frame for storing item consistency and mean consistency per participant values
+    out <- matrix(dimnames=list(c(), hexcolors$grapheme), ncol = nrow(hexcolors)) # "out" is a data frame for storing item consistency and mean consistency per participant values
 
     for (i in 1:nrow(hexcolors)) {
       if ( any(is.na(hexcolors[i,2:4])) ) { #if any of the three responses for an item is NA, the total item score is also coded as NA
@@ -68,48 +74,66 @@ consistency_scoring <- function(part_df, plotdir=NULL, method="euclidean",
       }
     }
 
-    out[1, 40] <- mean(out[1,c(1:26, 30:39)], na.rm = TRUE) # calculates the "mean of per-item summed differences" for the participant (excluding umlaut letters)
-    out[1, 41] <- mean(out[1,1:26], na.rm = TRUE) # for letters A-Z only, calculates the "mean of per-item summed differences" for the participant
-    out[1, 42] <- mean(out[1,30:39], na.rm = TRUE) # for digits 0-9 only, calculates the "mean of per-item summed differences" for the participant
-    out[1, 43] <- sum(!is.na(out[1,c(1:26, 30:39)])) # calculates for how many items there are 3 color responses, excluding umlaut letters
-    out[1, 44] <- sum(!is.na(out[1,1:26])) # calculates for how many letters there are 3 color responses, excluding umlaut letters
-    out[1, 45] <- sum(!is.na(out[1,30:39])) # calculates for how many digits there are 3 color responses
-    out[1, 46] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "black", byrow = TRUE) #calculates proportion of items for which all responses were "black", excluding umlaut letters
-    out[1, 47] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "blue", byrow = TRUE)
-    out[1, 48] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "hazy", byrow = TRUE)
-    out[1, 49] <- prop_col(hexcolors[c(1:26, 30:39), 2:4], col = "white", byrow = TRUE)
-    out[1, 50] <- prop_col(hexcolors[c(1:26), 2:4], col = "black", byrow = TRUE) #calculates proportion of non-umlaut letters for which all responses were "black"
-    out[1, 51] <- prop_col(hexcolors[c(1:26), 2:4], col = "blue", byrow = TRUE)
-    out[1, 52] <- prop_col(hexcolors[c(1:26), 2:4], col = "hazy", byrow = TRUE)
-    out[1, 53] <- prop_col(hexcolors[c(1:26), 2:4], col = "white", byrow = TRUE)
-    out[1, 54] <- prop_col(hexcolors[c(30:39), 2:4], col = "black", byrow = TRUE) #calculates proportion of digits for which all responses were "black"
-    out[1, 55] <- prop_col(hexcolors[c(30:39), 2:4], col = "blue", byrow = TRUE)
-    out[1, 56] <- prop_col(hexcolors[c(30:39), 2:4], col = "hazy", byrow = TRUE)
-    out[1, 57] <- prop_col(hexcolors[c(30:39), 2:4], col = "white", byrow = TRUE)
+    out <- cbind(out, "part_mean_tot" = mean(out[1, ], na.rm = TRUE))
+    if (swedish_chars) {
+      out <- cbind(out, 'part_mean_A_Ö' = mean(out[1, colnames(out) %in% swe_alphabet], na.rm = TRUE))
+    } else {
+      out <- cbind(out, 'part_mean_A_Z' = mean(out[1, colnames(out) %in% LETTERS]))
+    }
+    if (swedish_weekdays) {
+      out <- cbind(out, 'part_mean_wkdays' = mean(out[1, colnames(out) %in% swe_wkdays], na.rm = TRUE))
+    }
+    out <- cbind(out, "part_mean_0_9" = mean(out[1, colnames(out) %in% digits_chr], na.rm = TRUE))
 
+    out <- cbind(out, "three_resp_tot" = sum(!is.na(out)))
+    if (swedish_chars) {
+      out <- cbind(out, "three_resp_A_Ö" = sum(!is.na(out[1, colnames(out) %in% swe_alphabet])))
+    } else {
+      out <- cbind(out, "three_resp_A_Z" = sum(!is.na(out[1, colnames(out) %in% LETTERS])))
+    }
+    if (swedish_weekdays) {
+      out <- cbind(out, "three_resp_wkdays" = sum(!is.na(out[1, colnames(out) %in% swe_wkdays])))
+    }
+    out <- cbind(out, "three_resp_0_9" = sum(!is.na(out[1, colnames(out) %in% digits_chr])))
+
+    out <- cbind(out, "prop_black_tot" = prop_col(hexcolors[, 2:4], col = "black", byrow = TRUE))
+    out <- cbind(out, "prop_blue_tot" = prop_col(hexcolors[, 2:4], col = "blue", byrow = TRUE))
+    out <- cbind(out, "prop_hazy_tot" = prop_col(hexcolors[, 2:4], col = "hazy", byrow = TRUE))
+    out <- cbind(out, "prop_white_tot" = prop_col(hexcolors[, 2:4], col = "white", byrow = TRUE))
+    if (swedish_chars) {
+      out <- cbind(out, "prop_black_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "black", byrow = TRUE))
+      out <- cbind(out, "prop_blue_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "blue", byrow = TRUE))
+      out <- cbind(out, "prop_hazy_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "hazy", byrow = TRUE))
+      out <- cbind(out, "prop_white_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "white", byrow = TRUE))
+    } else {
+      out <- cbind(out, "prop_black_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "black", byrow = TRUE))
+      out <- cbind(out, "prop_blue_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "blue", byrow = TRUE))
+      out <- cbind(out, "prop_hazy_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "hazy", byrow = TRUE))
+      out <- cbind(out, "prop_white_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "white", byrow = TRUE))
+    }
+    if (swedish_weekdays) {
+      out <- cbind(out, "prop_black_wkdays" = prop_col(hexcolors[hexcolors$grapheme %in% swe_wkdays, 2:4], col = "black", byrow = TRUE))
+      out <- cbind(out, "prop_blue_wkdays" = prop_col(hexcolors[hexcolors$grapheme %in% swe_wkdays, 2:4], col = "blue", byrow = TRUE))
+      out <- cbind(out, "prop_hazy_wkdays" = prop_col(hexcolors[hexcolors$grapheme %in% swe_wkdays, 2:4], col = "hazy", byrow = TRUE))
+      out <- cbind(out, "prop_white_wkdays" = prop_col(hexcolors[hexcolors$grapheme %in% swe_wkdays, 2:4], col = "white", byrow = TRUE))
+    }
+    out <- cbind(out, "prop_black_0_9" = prop_col(hexcolors[hexcolors$grapheme %in% digits_chr, 2:4], col = "black", byrow = TRUE))
+    out <- cbind(out, "prop_blue_0_9" = prop_col(hexcolors[hexcolors$grapheme %in% digits_chr, 2:4], col = "blue", byrow = TRUE))
+    out <- cbind(out, "prop_hazy_0_9" = prop_col(hexcolors[hexcolors$grapheme %in% digits_chr, 2:4], col = "hazy", byrow = TRUE))
+    out <- cbind(out, "prop_white_0_9" = prop_col(hexcolors[hexcolors$grapheme %in% digits_chr, 2:4], col = "white", byrow = TRUE))
 
     df_total <- rbind(df_total, out)
     if (!is.null(plotdir)) {
-      if (is.null(nameby)) {
+      if (is.null(participant_ids)) {
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
-                      savepath = paste(plotdir, "/Consistency plot ", foo, ".pdf", sep=""))
+                      savepath = paste0(plotdir, "/Consistency plot ", foo, ".pdf"))
       } else {
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
-                      savepath = paste(plotdir, "/Consistency plot ", as.character(part_df[foo, nameby]), ".pdf", sep=""))
+                      savepath = paste0(plotdir, "/Consistency plot ", as.character(participant_ids[foo]), ".pdf"))
       }
     }
 
   }
-  df_total <- cbind(part_df[, 5], part_df[, 3], df_total)
-  colnames(df_total) <- c("PROFILEID", "cons_test_time", # sets column names
-                          graphemes,
-                          "part_mean_tot", "part_mean_A_Z", "part_mean_0_9",
-                          "three_resp_tot", "three_resp_A_Z", "three_resp_0_9",
-                          "prop_black_tot", "prop_blue_tot",
-                          "prop_hazy_tot", "prop_white_tot",
-                          "prop_black_A_Z", "prop_blue_A_Z",
-                          "prop_hazy_A_Z", "prop_white_A_Z",
-                          "prop_black_0_9", "prop_blue_0_9",
-                          "prop_hazy_0_9", "prop_white_0_9")
+  df_total <- cbind('participant_id' = part_df[, id_col_name], 'cons_test_time' = part_df[, timestamp_col_name], df_total)
   return(df_total)
 }

@@ -17,14 +17,21 @@
 #'
 
 plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
-  plotdf <- data.frame(Sum_distance=as.vector(ddf)[1:39], #L: This assumes that there are 39 characters (including umlaut) with accompanying data
-                       Character=hexcolors[, "letter"],
+  # finds all columns in ddf vector/data frame that correspond to a grapheme (assuming that other columns start with 'part_','prop_' or 'three_')
+  grapheme_cols <- which(!grepl('^(part_|three_|prop)', colnames(ddf)))
+
+  # get string representation of graphemes (cuts down to maximum of 3 characters)
+  grapheme_repr <- ifelse(nchar(colnames(ddf)[grapheme_cols]) < 3,
+                          colnames(ddf)[grapheme_cols],
+                          substr(colnames(ddf)[grapheme_cols], 1, 2))
+  plotdf <- data.frame(Sum_distance=as.vector(ddf[grapheme_cols]),
+                       Grapheme=grapheme_repr,
                        stringsAsFactors=FALSE
   )
   y_up_lim <- ifelse(max(plotdf$Sum_distance, na.rm = TRUE) == -Inf,
                      5,
                      max(plotdf$Sum_distance, na.rm = TRUE))
-  myplot <- ggplot2::ggplot(data=plotdf, ggplot2::aes(x=Character, y=Sum_distance)) +
+  myplot <- ggplot2::ggplot(data=plotdf, ggplot2::aes(x=Grapheme, y=Sum_distance)) +
     ggplot2::geom_col(fill="black", color="black", width=0.5) + #produces columns using the aes() arguments from the ggplot call
     ggplot2::geom_hline(yintercept=135.30, color="blue") + #adds a horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
     ggplot2::labs(x="Grapheme", y="Sum distance between responses") + #x- and y-axis titles
@@ -34,11 +41,11 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
                                         length.out = 10),
                                     -floor(log10(y_up_lim)))
     ) + #specifies y axis ticks/breaks
-    ggplot2::geom_text(y=-y_up_lim * 0.04, label=plotdf$Character, size = 3.5, #adds first line of graphemes
+    ggplot2::geom_text(y=-y_up_lim * 0.04, label=plotdf$Grapheme, size = 3.5, #adds first line of graphemes
               color = hexcolors[, 2]) +
-    ggplot2::geom_text(y=-y_up_lim * 0.08, label=plotdf$Character, size = 3.5, #adds second line of graphemes
+    ggplot2::geom_text(y=-y_up_lim * 0.08, label=plotdf$Grapheme, size = 3.5, #adds second line of graphemes
               color = hexcolors[, 3]) +
-    ggplot2::geom_text(y=-y_up_lim * 0.12, label=plotdf$Character, size = 3.5, #adds third line of graphemes
+    ggplot2::geom_text(y=-y_up_lim * 0.12, label=plotdf$Grapheme, size = 3.5, #adds third line of graphemes
               color = hexcolors[, 4]) +
     ggplot2::theme(axis.ticks.x=ggplot2::element_blank(), #removes x axis ticks
           panel.grid.major.x=ggplot2::element_blank(), #removes vertical grid lines
