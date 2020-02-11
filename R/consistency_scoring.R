@@ -26,7 +26,7 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
                                 fmt="Luv", nameby=NULL, swedish_chars=FALSE,
                                 swedish_weekdays=FALSE,
                                 participant_ids=NULL) {
-  part_df[part_df == "------" | part_df == "nocolor" | ""] <- NA # "------" represents "no color" choices, which is recoded here as NA
+  part_df[part_df == "------" | part_df == "nocolor" | part_df == ""] <- NA # "------" represents "no color" choices, which is recoded here as NA
   symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the presented grapheme data is, at KIND)
   timings <- grep("^timing", names(part_df)) # grabs all column names that have "timing" in them (which is where the response timing data is, at KIND)
   colors <- grep("^color", names(part_df)) # grabs all column names that have "color" in them (which is where the response color data is, at KIND)
