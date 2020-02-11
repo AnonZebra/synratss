@@ -33,7 +33,7 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
                      max(plotdf$Sum_distance, na.rm = TRUE))
   myplot <- ggplot2::ggplot(data=plotdf, ggplot2::aes(x=Grapheme, y=Sum_distance)) +
     ggplot2::geom_col(fill="black", color="black", width=0.5) + #produces columns using the aes() arguments from the ggplot call
-    ggplot2::geom_hline(yintercept=135.30, color="blue") + #adds a horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
+    ggplot2::geom_hline(yintercept=135.30, color="blue") + #adds an horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
     ggplot2::labs(x="Grapheme", y="Sum distance between responses") + #x- and y-axis titles
     ggplot2::scale_x_discrete(labels=NULL) + #removes titles for the x axis values/ticks
     ggplot2::scale_y_continuous(breaks=round(seq(0,
