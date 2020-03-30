@@ -115,11 +115,13 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
       out <- cbind(out, "prop_blue_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "blue", byrow = TRUE))
       out <- cbind(out, "prop_hazy_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "hazy", byrow = TRUE))
       out <- cbind(out, "prop_white_A_Ö" = prop_col(hexcolors[hexcolors$grapheme %in% swe_alphabet, 2:4], col = "white", byrow = TRUE))
+      out <- cbind(out, "prop_black_vocals" = prop_col(hexcolors[tolower(hexcolors$grapheme) %in% c("a", "e", "i", "o", "u", "y", "å", "ä", "ö"), 2:4], col = "black", byrow = TRUE))
     } else {
       out <- cbind(out, "prop_black_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "black", byrow = TRUE))
       out <- cbind(out, "prop_blue_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "blue", byrow = TRUE))
       out <- cbind(out, "prop_hazy_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "hazy", byrow = TRUE))
       out <- cbind(out, "prop_white_A_Z" = prop_col(hexcolors[hexcolors$grapheme %in% LETTERS, 2:4], col = "white", byrow = TRUE))
+      out <- cbind(out, "prop_black_vocals" = prop_col(hexcolors[tolower(hexcolors$grapheme) %in% c("a", "e", "i", "o", "u", "y"), 2:4], col = "black", byrow = TRUE))
     }
     if (swedish_weekdays) {
       out <- cbind(out, "prop_black_wkdays" = prop_col(hexcolors[hexcolors$grapheme %in% swe_wkdays, 2:4], col = "black", byrow = TRUE))
