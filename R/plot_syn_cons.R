@@ -89,9 +89,6 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category
         myplot <- myplot +
           ggplot2::geom_hline(yintercept=multi_mean, color="green")
       }
-    myplot <- myplot +
-      ggplot2::annotate("text", x="topright", label = "Siffror", color="red") +
-      ggplot2::annotate("text", x="topright", label = "Bokstäver", color="yellow")
     }
   }
   if (!is.null(savepath)){
@@ -101,5 +98,4 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category
   if (tovar==TRUE){
     return(myplot)
   }
-
 }
