@@ -16,6 +16,9 @@
 #' @param participant_ids a vector for naming output plots. needs to be in the same order as the part_df participants.
 #' @param category_lines if TRUE and plotdir is set, drawn plots will include lines
 #' representing the mean score per category
+#' @param multi_char_category if TRUE, plotdir is set, and category_lines is TRUE,
+#' category lines will include a line for representing mean score of multi character
+#' category
 #' @seealso \code{\link[synratss]{prop_col}} \code{\link[synratss]{dist_sum}}
 #' \code{\link[synratss]{plot_syn_cons}}
 #'
@@ -28,7 +31,8 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
                                 fmt="Luv", nameby=NULL, swedish_chars=FALSE,
                                 swedish_weekdays=FALSE,
                                 participant_ids=NULL,
-                                category_lines=FALSE) {
+                                category_lines=FALSE,
+                                multi_char_category=FALSE) {
   part_df[part_df == "------" | part_df == "nocolor" | part_df == ""] <- NA # "------" represents "no color" choices, which is recoded here as NA
   symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the presented grapheme data is, at KIND)
   timings <- grep("^timing", names(part_df)) # grabs all column names that have "timing" in them (which is where the response timing data is, at KIND)

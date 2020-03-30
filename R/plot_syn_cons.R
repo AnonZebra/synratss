@@ -83,6 +83,16 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category
       myplot <- myplot +
         ggplot2::geom_hline(yintercept=letter_mean, color="yellow")
     }
+    if (multi_char_category) {
+      multi_mean <- mean(ddf[1, grepl("..+", colnames(ddf))], na.rm=TRUE)
+      if (!is.na(multi_mean)) {
+        myplot <- myplot +
+          ggplot2::geom_hline(yintercept=multi_mean, color="green")
+      }
+    myplot <- myplot +
+      ggplot2::annotate("text", x="topright", label = "Siffror", color="red") +
+      ggplot2::annotate("text", x="topright", label = "Bokstäver", color="yellow")
+    }
   }
   if (!is.null(savepath)){
     ggplot2::ggsave(savepath)
