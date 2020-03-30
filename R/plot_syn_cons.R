@@ -17,15 +17,16 @@
 #'
 
 plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
+  # sort graphemes based on alphabetical order, then on number of characters
+  ddf <- ddf[, order(names(ddf))]
+  ddf <- ddf[, order(nchar(names(ddf)))]
+  hexcolors <- hexcolors[order(hexcolors[, 1]), ]
+  hexcolors <- hexcolors[order(nchar(hexcolors[, 1])), ]
+
   # finds all columns in ddf vector/data frame that correspond to a grapheme (assuming that other columns start with 'part_','prop_' or 'three_')
   grapheme_cols <- which(!grepl('^(part_|three_|prop)', colnames(ddf)))
 
-  # sort graphemes based on alphabetical order, then on number of characters
-  grapheme_cols <- sort(grapheme_cols)
-  grapheme_cols <- grapheme_cols[order(nchar(grapheme_cols))]
-  print(grapheme_cols)
-  hexcolors <- hexcolors[order(hexcolors[, 1]), ]
-  hexcolors <- hexcolors[order(nchar(hexcolors[, 1])), ]
+
 
   # get string representation of graphemes (cuts down to maximum of 3 characters)
   grapheme_repr <- ifelse(nchar(colnames(ddf)[grapheme_cols]) < 3,
