@@ -23,10 +23,8 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   # sort graphemes based on alphabetical order, then on number of characters
   grapheme_cols <- sort(grapheme_cols)
   grapheme_cols <- grapheme_cols[order(nchar(grapheme_cols))]
-  hex_first_col <-hexcolors[, 1]
-  hex_first_col <- sort(hex_first_col)
-  hex_order <- order(nchar(hex_first_col))
-  hexcolors <- hexcolors[hex_order, ]
+  hexcolors <- hexcolors[order(hexcolors[, 1]), ]
+  hexcolors <- hexcolors[order(nchar(hexcolors[, 1])), ]
 
   # get string representation of graphemes (cuts down to maximum of 3 characters)
   grapheme_repr <- ifelse(nchar(colnames(ddf)[grapheme_cols]) < 3,
@@ -36,8 +34,8 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
 
   plotdf <- data.frame(Sum_distance=as.vector(ddf[grapheme_cols]),
                        Grapheme=grapheme_repr,
-                       stringsAsFactors=FALSE
-  )
+                       stringsAsFactors=FALSE)
+
   y_up_lim <- ifelse(max(plotdf$Sum_distance, na.rm = TRUE) == -Inf,
                      5,
                      max(plotdf$Sum_distance, na.rm = TRUE))
