@@ -18,6 +18,7 @@
 
 plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   # sort graphemes based on alphabetical order, then on number of characters
+  print(ddf)
   ddf <- ddf[, order(names(ddf))]
   ddf <- ddf[, order(nchar(names(ddf)))]
   hexcolors <- hexcolors[order(hexcolors[, 1]), ]
