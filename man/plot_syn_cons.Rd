@@ -4,7 +4,14 @@
 \alias{plot_syn_cons}
 \title{Plot consistency scores and responses by synesthetic inducer}
 \usage{
-plot_syn_cons(ddf, hexcolors, savepath = NULL, tovar = FALSE)
+plot_syn_cons(
+  ddf,
+  hexcolors,
+  savepath = NULL,
+  tovar = FALSE,
+  category_lines = FALSE,
+  multi_char_category = FALSE
+)
 }
 \arguments{
 \item{ddf}{named single-row array/matrix of mean difference between response colors.}
@@ -16,6 +23,12 @@ for all graphemes}
 
 \item{tovar}{tovar: if TRUE, resulting plot is returned so that you
 can save it to a variable. defaults to FALSE}
+
+\item{category_lines:}{if TRUE, plots include lines representing the mean
+consistency score per category (digits, single letters, graphemes made up of multiple characters)}
+
+\item{multi_char_category:}{only relevant if category_lines set to TRUE. then, if TRUE,
+plots include a line representing mean for graphemes made up of multiple characters}
 }
 \description{
 Creates (inducer ; response variation score) bar plots for data

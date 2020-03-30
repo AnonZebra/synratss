@@ -14,7 +14,8 @@ consistency_scoring(
   nameby = NULL,
   swedish_chars = FALSE,
   swedish_weekdays = FALSE,
-  participant_ids = NULL
+  participant_ids = NULL,
+  category_lines = FALSE
 )
 }
 \arguments{
@@ -35,6 +36,9 @@ Manhattan/city block distances - "euclidean" is standard)}
 \item{swedish_weekdays}{specify if swedish weekdays are in the data frame or not}
 
 \item{participant_ids}{a vector for naming output plots. needs to be in the same order as the part_df participants.}
+
+\item{category_lines}{if TRUE and plotdir is set, drawn plots will include lines
+representing the mean score per category}
 }
 \description{
 Calculates consistency scores using data from a consistency

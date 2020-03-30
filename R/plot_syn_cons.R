@@ -10,13 +10,17 @@
 #' @param savepath (optional) file path for saving produced plot
 #' @param tovar tovar: if TRUE, resulting plot is returned so that you
 #' can save it to a variable. defaults to FALSE
-#'
+#' @param category_lines: if TRUE, plots include lines representing the mean
+#' consistency score per category (digits, single letters, graphemes made up of multiple characters)
+#' @param multi_char_category: only relevant if category_lines set to TRUE. then, if TRUE,
+#' plots include a line representing mean for graphemes made up of multiple characters
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
 #' @export
 #'
 
-plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
+plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category_lines=FALSE,
+                          multi_char_category=FALSE) {
   # sort graphemes based on alphabetical order, then on number of characters
   # doing weird stuff here because R converts the matrix into a numeric
   # vector when rearranging the columns, causing headaches
@@ -68,6 +72,18 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
           panel.grid.minor.y=ggplot2::element_blank()) + #removes the smaller horizontal grid lines
     ggplot2::coord_cartesian(y = c(-y_up_lim / 10,
                           y_up_lim)) #specifies y axis limits
+  if (category_lines) {
+    digit_mean <- mean(ddf[1, grepl("^[0-9]$", colnames(ddf))])
+    letter_mean <- mean(ddf[1, grepl("[^A-Za-z]", colnames(ddf))])
+    if (!is.na(dig_mean)) {
+      myplot <- myplot +
+        ggplot2::geom_hline(yintercept=digit_mean, color="red")
+    }
+    if (!is.na(letter_mean)) {
+      myplot <- myplot +
+        ggplot2::geom_hline(yintercept=letter_mean, color="yellow")
+    }
+  }
   if (!is.null(savepath)){
     ggplot2::ggsave(savepath)
   }

@@ -14,6 +14,8 @@
 #' @param swedish_chars specify if swedish characters are in the data frame or not
 #' @param swedish_weekdays specify if swedish weekdays are in the data frame or not
 #' @param participant_ids a vector for naming output plots. needs to be in the same order as the part_df participants.
+#' @param category_lines if TRUE and plotdir is set, drawn plots will include lines
+#' representing the mean score per category
 #' @seealso \code{\link[synratss]{prop_col}} \code{\link[synratss]{dist_sum}}
 #' \code{\link[synratss]{plot_syn_cons}}
 #'
@@ -25,7 +27,8 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
                                 plotdir=NULL, method="euclidean",
                                 fmt="Luv", nameby=NULL, swedish_chars=FALSE,
                                 swedish_weekdays=FALSE,
-                                participant_ids=NULL) {
+                                participant_ids=NULL,
+                                category_lines=FALSE) {
   part_df[part_df == "------" | part_df == "nocolor" | part_df == ""] <- NA # "------" represents "no color" choices, which is recoded here as NA
   symbols <- grep("^symbol", names(part_df)) # grabs all column names that have "symbol" in them (which is where the presented grapheme data is, at KIND)
   timings <- grep("^timing", names(part_df)) # grabs all column names that have "timing" in them (which is where the response timing data is, at KIND)
@@ -129,7 +132,9 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
                       savepath = paste0(plotdir, "/Consistency plot ", foo, ".pdf"))
       } else {
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
-                      savepath = paste0(plotdir, "/Consistency plot ", as.character(participant_ids[foo]), ".pdf"))
+                      savepath = paste0(plotdir, "/Consistency plot ",
+                                        as.character(participant_ids[foo]), ".pdf"),
+                      category_lines = category_lines)
       }
     }
 
