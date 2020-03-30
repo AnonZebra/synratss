@@ -18,8 +18,13 @@
 
 plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   # sort graphemes based on alphabetical order, then on number of characters
+  # doing weird stuff here because R converts the matrix into a numeric
+  # vector when rearranging the columns, causing headaches
   ddf <- ddf[, order(colnames(ddf))]
   ddf <- ddf[order(nchar(names(ddf)))]
+  foo_matrix <- matrix(ddf, ncol=length(ddf))
+  colnames(foo_matrix) <- names(ddf)
+  ddf <- foo_matrix
   hexcolors <- hexcolors[order(hexcolors[, 1]), ]
   hexcolors <- hexcolors[order(nchar(hexcolors[, 1])), ]
 
@@ -28,7 +33,7 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
 
 
 
-  # get string representation of graphemes (cuts down to maximum of 3 characters)
+  # get string representation of graphemes (cuts down to maximum of 2 characters)
   grapheme_repr <- ifelse(nchar(colnames(ddf)[grapheme_cols]) < 3,
                           colnames(ddf)[grapheme_cols],
                           substr(colnames(ddf)[grapheme_cols], 1, 2))
@@ -41,6 +46,7 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   y_up_lim <- ifelse(max(plotdf$Sum_distance, na.rm = TRUE) == -Inf,
                      5,
                      max(plotdf$Sum_distance, na.rm = TRUE))
+  plotdf$Grapheme <- factor(plotdf$Grapheme, levels=plotdf$Grapheme, ordered=TRUE)
   myplot <- ggplot2::ggplot(data=plotdf, ggplot2::aes(x=Grapheme, y=Sum_distance)) +
     ggplot2::geom_col(fill="black", color="black", width=0.5) + #produces columns using the aes() arguments from the ggplot call
     ggplot2::geom_hline(yintercept=135.30, color="blue") + #adds an horizontal blue line showing the "mean of mean difference between responses" (remove this line if this is unwanted)
