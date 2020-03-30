@@ -75,7 +75,7 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category
   if (category_lines) {
     digit_mean <- mean(ddf[1, grepl("^[0-9]$", colnames(ddf))])
     letter_mean <- mean(ddf[1, grepl("[^A-Za-z]", colnames(ddf))])
-    if (!is.na(dig_mean)) {
+    if (!is.na(digit_mean)) {
       myplot <- myplot +
         ggplot2::geom_hline(yintercept=digit_mean, color="red")
     }
