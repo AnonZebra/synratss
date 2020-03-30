@@ -138,7 +138,8 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
         plot_syn_cons(out, hexcolors, # calls the plot_syn_cons function to produce a plot for the participant in the specified "plotdir" directory.
                       savepath = paste0(plotdir, "/Consistency plot ",
                                         as.character(participant_ids[foo]), ".pdf"),
-                      category_lines = category_lines)
+                      category_lines = category_lines,
+                      multi_char_category = multi_char_category)
       }
     }
 
