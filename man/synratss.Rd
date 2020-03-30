@@ -3,7 +3,6 @@
 \docType{package}
 \name{synratss}
 \alias{synratss}
-\alias{synratss-package}
 \title{synratss}
 \description{
 This package is used at KIND for synesthesia-related research. The main function is \code{consistency_scoring()}, which uses the other

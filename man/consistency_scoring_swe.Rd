@@ -4,8 +4,13 @@
 \alias{consistency_scoring_swe}
 \title{Calculate consistency scores (Swe ver.)}
 \usage{
-consistency_scoring_swe(part_df, plotdir = NULL, method = "euclidean",
-  fmt = "Luv", nameby = NULL)
+consistency_scoring_swe(
+  part_df,
+  plotdir = NULL,
+  method = "euclidean",
+  fmt = "Luv",
+  nameby = NULL
+)
 }
 \arguments{
 \item{part_df}{participant consistency test raw data frame}

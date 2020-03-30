@@ -4,10 +4,18 @@
 \alias{consistency_scoring}
 \title{Calculate consistency scores}
 \usage{
-consistency_scoring(part_df, id_col_name, timestamp_col_name,
-  plotdir = NULL, method = "euclidean", fmt = "Luv", nameby = NULL,
-  swedish_chars = FALSE, swedish_weekdays = FALSE,
-  participant_ids = NULL)
+consistency_scoring(
+  part_df,
+  id_col_name,
+  timestamp_col_name,
+  plotdir = NULL,
+  method = "euclidean",
+  fmt = "Luv",
+  nameby = NULL,
+  swedish_chars = FALSE,
+  swedish_weekdays = FALSE,
+  participant_ids = NULL
+)
 }
 \arguments{
 \item{part_df}{participant consistency test raw data frame}

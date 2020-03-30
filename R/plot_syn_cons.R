@@ -20,10 +20,20 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   # finds all columns in ddf vector/data frame that correspond to a grapheme (assuming that other columns start with 'part_','prop_' or 'three_')
   grapheme_cols <- which(!grepl('^(part_|three_|prop)', colnames(ddf)))
 
+  # sort graphemes based on alphabetical order, then on number of characters
+  grapheme_cols <- sort(grapheme_cols)
+  grapheme_cols <- grapheme_cols[order(nchar(grapheme_cols))]
+  hex_first_col <-hexcolors[, 1]
+  hex_first_col <- sort(hex_first_col)
+  hex_order <- order(nchar(hex_first_col))
+  hexcolors <- hexcolors[hex_order, ]
+
   # get string representation of graphemes (cuts down to maximum of 3 characters)
   grapheme_repr <- ifelse(nchar(colnames(ddf)[grapheme_cols]) < 3,
                           colnames(ddf)[grapheme_cols],
                           substr(colnames(ddf)[grapheme_cols], 1, 2))
+
+
   plotdf <- data.frame(Sum_distance=as.vector(ddf[grapheme_cols]),
                        Grapheme=grapheme_repr,
                        stringsAsFactors=FALSE
