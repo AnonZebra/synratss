@@ -95,13 +95,16 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
     out <- cbind(out, "three_resp_tot" = sum(!is.na(out)))
     if (swedish_chars) {
       out <- cbind(out, "three_resp_A_Ö" = sum(!is.na(out[1, colnames(out) %in% swe_alphabet])))
+      out <- cbind(out, "three_resp_vocals" = sum(!is.na(out[1, tolower(colnames(out)) %in% c("a", "e", "i", "o", "u", "y")])))
     } else {
       out <- cbind(out, "three_resp_A_Z" = sum(!is.na(out[1, colnames(out) %in% LETTERS])))
+      out <- cbind(out, "three_resp_vocals" = sum(!is.na(out[1, tolower(colnames(out)) %in% c("a", "e", "i", "o", "u", "y", "ä", "å", "ö")])))
     }
     if (swedish_weekdays) {
       out <- cbind(out, "three_resp_wkdays" = sum(!is.na(out[1, colnames(out) %in% swe_wkdays])))
     }
     out <- cbind(out, "three_resp_0_9" = sum(!is.na(out[1, colnames(out) %in% digits_chr])))
+
 
     out <- cbind(out, "prop_black_tot" = prop_col(hexcolors[, 2:4], col = "black", byrow = TRUE))
     out <- cbind(out, "prop_blue_tot" = prop_col(hexcolors[, 2:4], col = "blue", byrow = TRUE))
