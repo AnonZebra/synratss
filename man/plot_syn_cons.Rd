@@ -7,7 +7,7 @@
 plot_syn_cons(ddf, hexcolors, savepath = NULL, tovar = FALSE)
 }
 \arguments{
-\item{ddf}{vector/single-row array of mean difference between response colors.}
+\item{ddf}{named single-row array/matrix of mean difference between response colors.}
 
 \item{hexcolors}{data frame with hexadecimal color codes for responses
 for all graphemes}
