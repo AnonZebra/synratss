@@ -4,7 +4,7 @@
 #' from a consistency test for synesthesia, with each inducer in the color that
 #' correspond to each participant response beneath each bar.
 #'
-#' @param ddf vector/single-row array of mean difference between response colors.
+#' @param ddf named single-row array/matrix of mean difference between response colors.
 #' @param hexcolors data frame with hexadecimal color codes for responses
 #' for all graphemes
 #' @param savepath (optional) file path for saving produced plot
@@ -18,9 +18,8 @@
 
 plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE) {
   # sort graphemes based on alphabetical order, then on number of characters
-  print(names(ddf))
-  ddf <- ddf[, order(names(ddf))]
-  ddf <- ddf[, order(nchar(names(ddf)))]
+  ddf <- ddf[, order(colnames(ddf))]
+  ddf <- ddf[, order(nchar(colnames(ddf)))]
   hexcolors <- hexcolors[order(hexcolors[, 1]), ]
   hexcolors <- hexcolors[order(nchar(hexcolors[, 1])), ]
 
