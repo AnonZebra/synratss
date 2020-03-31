@@ -69,5 +69,5 @@ rm_dup <- function(df, ind_col, keep_last=FALSE) {
 
   out_df <- ord_df[keep_rows,]
   out_df <- out_df[order(out_df$keepord), ]
-  return(out_df)
+  return(subset(out_df, select = -keepord))
 }
