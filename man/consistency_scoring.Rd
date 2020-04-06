@@ -15,7 +15,8 @@ consistency_scoring(
   swedish_chars = FALSE,
   swedish_weekdays = FALSE,
   participant_ids = NULL,
-  category_lines = FALSE
+  category_lines = FALSE,
+  multi_char_category = FALSE
 )
 }
 \arguments{
@@ -39,6 +40,10 @@ Manhattan/city block distances - "euclidean" is standard)}
 
 \item{category_lines}{if TRUE and plotdir is set, drawn plots will include lines
 representing the mean score per category}
+
+\item{multi_char_category}{if TRUE, plotdir is set, and category_lines is TRUE,
+category lines will include a line for representing mean score of multi character
+category}
 }
 \description{
 Calculates consistency scores using data from a consistency

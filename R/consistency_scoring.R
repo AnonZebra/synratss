@@ -74,6 +74,9 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
       if ( any(is.na(hexcolors[i,2:4])) ) { #if any of the three responses for an item is NA, the total item score is also coded as NA
         item_score <- NA
       }
+      else if (prop_col(hexcolors[i, 2:4], col = "black", byrow = TRUE)) { # if all the responses fall within the category of 'black' (hex value <= 22)
+        item_score <- NA
+      }
       else {
         x <- hex_to_cspace(hexcolors[i,2:4], fmt)
         item_score <- dist_sum(x, method)
@@ -85,7 +88,7 @@ consistency_scoring <- function(part_df, id_col_name, timestamp_col_name,
     if (swedish_chars) {
       out <- cbind(out, 'part_mean_A_Ö' = mean(out[1, colnames(out) %in% swe_alphabet], na.rm = TRUE))
     } else {
-      out <- cbind(out, 'part_mean_A_Z' = mean(out[1, colnames(out) %in% LETTERS], , na.rm = TRUE))
+      out <- cbind(out, 'part_mean_A_Z' = mean(out[1, colnames(out) %in% LETTERS], na.rm = TRUE))
     }
     if (swedish_weekdays) {
       out <- cbind(out, 'part_mean_wkdays' = mean(out[1, colnames(out) %in% swe_wkdays], na.rm = TRUE))
