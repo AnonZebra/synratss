@@ -84,8 +84,9 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category
         ggplot2::geom_hline(yintercept=letter_mean, color="yellow")
     }
     if (multi_char_category) {
-      print(ddf[1, !grepl("(prop|part|resp)", colnames(ddf)[grepl("..+", colnames(ddf))])])
-      multi_mean <- mean(ddf[1, !grepl("(prop|part|resp)", colnames(ddf)[grepl("..+", colnames(ddf))])], na.rm=TRUE)
+      weekdays_bool <- grepl("..*", colnames(ddf)) & !grepl("(prop|part|resp)_", colnames(ddf))
+      print(weekdays_bool)
+      multi_mean <- mean(ddf[1, weekdays_bool], na.rm=TRUE)
       if (!is.na(multi_mean)) {
         myplot <- myplot +
           ggplot2::geom_hline(yintercept=multi_mean, color="green")
