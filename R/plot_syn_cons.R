@@ -84,6 +84,7 @@ plot_syn_cons <- function(ddf, hexcolors, savepath=NULL, tovar = FALSE, category
         ggplot2::geom_hline(yintercept=letter_mean, color="yellow")
     }
     if (multi_char_category) {
+      print(ddf[1, grepl("..+", colnames(ddf))])
       multi_mean <- mean(ddf[1, grepl("..+", colnames(ddf))], na.rm=TRUE)
       if (!is.na(multi_mean)) {
         myplot <- myplot +
