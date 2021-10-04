@@ -14,7 +14,8 @@ Converts a RATSS code/study ID (in the format e.g.
 "11 0104 01 01 14" or without any spaces "110104010114") to a
 <family>_<twin_no> format (e.g. "104_1"). For parents, this leads to them
 having usernames in the format "<family no>_5" or "<family no>_6". Note that
-this parent coding might not be what you want or what has been used previously.
+this parent coding might not be what you want or
+what has been used previously.
 }
 \examples{
 x <- "11 0104 01 01 14"

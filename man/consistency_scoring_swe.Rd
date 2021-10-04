@@ -23,7 +23,8 @@ Manhattan/city block distances - "euclidean" is standard)}
 
 \item{fmt}{specifies color format/space to be used ("sRGB", "Luv")}
 
-\item{nameby}{(optional) name, in quotes, of column to name output plots by, e. g. "USERNAME"}
+\item{nameby}{(optional) name, in quotes, of column to name
+output plots by, e. g. "USERNAME"}
 }
 \description{
 This function is identical to \code{consistency_scoring},

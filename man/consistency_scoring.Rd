@@ -30,19 +30,26 @@ Manhattan/city block distances - "euclidean" is standard)}
 
 \item{fmt}{specifies color format/space to be used ("sRGB", "Luv")}
 
-\item{nameby}{(optional) name, in quotes, of column to name output plots by, e. g. "USERNAME"}
+\item{nameby}{(optional) name, in quotes, of column to name
+output plots by, e. g. "USERNAME"}
 
-\item{swedish_chars}{specify if swedish characters are in the data frame or not}
+\item{swedish_chars}{specify if swedish characters are in
+the data frame or not}
 
-\item{swedish_weekdays}{specify if swedish weekdays are in the data frame or not}
+\item{swedish_weekdays}{specify if swedish weekdays are in
+the data frame or not}
 
-\item{participant_ids}{a vector for naming output plots. needs to be in the same order as the part_df participants.}
+\item{participant_ids}{a vector for naming output plots. needs
+to be in the same order as the part_df participants.}
 
-\item{category_lines}{if TRUE and plotdir is set, drawn plots will include lines
+\item{category_lines}{if TRUE and plotdir is set,
+drawn plots will include lines
 representing the mean score per category}
 
-\item{multi_char_category}{if TRUE, plotdir is set, and category_lines is TRUE,
-category lines will include a line for representing mean score of multi character
+\item{multi_char_category}{if TRUE, plotdir is set, and
+category_lines is TRUE,
+category lines will include a line for representing
+mean score of multi character
 category}
 }
 \description{

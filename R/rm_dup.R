@@ -1,6 +1,7 @@
 #' @title Remove duplicates from a data frame
 #'
-#' @description \code{rm_dup()} finds all rows in a data frame which share the same
+#' @description \code{rm_dup()} finds all rows in a
+#' data frame which share the same
 #' entry for a target column and returns a data frame where only the first
 #' or last of each set of duplicates is retained.
 #'
@@ -14,12 +15,17 @@
 #' specified column are removed.
 #'
 #' @details \code{rm_dup} finds all rows in a data frame which share the same
-#' entry for a target column and returns a data frame where. Then for each set of
-#' duplicates, in a first step, the row with the most non-missing/non-NA values
-#' is retained. In a second step, if there are duplicate rows where more than one row
-#' has non-NA values for all columns, either the first (keep_last=FALSE) or the last
-#' (keep_last=TRUE) row in the set of duplicates is kept. Rows with NA entries in the
-#' target column are left as they are (even if there are multiple NA's). If no duplicates
+#' entry for a target column and returns a data frame where duplicates
+#' have been removed.
+#' For each set of duplicates, in a first step, the
+#' row with the most non-missing/non-NA values
+#' is retained. In a second step, if there are
+#' duplicate rows where more than one row
+#' has non-NA values for all columns, either the first
+#' (keep_last=FALSE) or the last (keep_last=TRUE) row in
+#' the set of duplicates is kept. Rows with NA entries in the
+#' target column are left as they are
+#' (even if there are multiple NA's). If no duplicates
 #' are found, the data frame is returned as-is.
 #'
 #' @seealso \code{\link[base]{order}}
@@ -32,42 +38,80 @@
 #' @export
 
 rm_dup <- function(df, ind_col, keep_last=FALSE) {
-  man_df <- cbind(df, keepord = 1:nrow(df)) # adds a "keepord" column for preserving original order
-  ord_var <- order(man_df[, ind_col]) # creates vector giving element positions by ascending order for the target column
-  ord_df <- man_df[ord_var, ] # reorders the data frame based on values in the target column
+  # add a "keepord" column for preserving original order
+  man_df <- cbind(df, keepord = 1:nrow(df))
+  # create vector giving element positions
+  # by ascending order for the target column
+  ord_var <- order(man_df[, ind_col])
+  # reorder the data frame based on values in the target column
+  ord_df <- man_df[ord_var, ]
 
-  na_rows <- which(is.na(ord_df[, ind_col])) # stores the row numbers of rows with NA values in the index column separately
+  # store the row numbers of rows with NA values in the index column separately
+  na_rows <- which(is.na(ord_df[, ind_col]))
 
+  # initiates a hash environment/dictionary for storing "key-value" pairs,
+  # with "keys" being target column levels, and "values" being target
+  # column row(s) corresponding to that level. sets of duplicates are
+  # represented by multiple "values" bound to one "key"
+  targ_hash <- hash::hash()
 
-  targ_hash <- hash::hash() # initiates a hash environment/dictionary for storing "key-value" pairs, with "keys" being target column levels, and "values" being target column row(s) corresponding to that level. sets of duplicates are represented by multiple "values" bound to one "key"
-
-  for (i in 1:nrow(ord_df)) { # for loop for generating "key"-"value" pairings as described above
-    if (is.na(ord_df[i, ind_col])) {next} # if the target column value in row i is NA, skip this and proceed to the next row
-    cell_val <- as.character(ord_df[i, ind_col]) # gets the target column value in row i and converts it to type character
-    if (!hash::has.key(cell_val, targ_hash)) { # checks for row i if there is a "key" corresponding to the row's target column value
-      targ_hash[[cell_val]] <- list(i) # if there is no key yet, initiate a "key" for the target column value and pair it with the row number
+  # for loop for generating "key"-"value" pairings as described above
+  for (i in 1:nrow(ord_df)) {
+    # if the target column value in row i is NA,
+    # skip this and proceed to the next row
+    if (is.na(ord_df[i, ind_col])) {
+      next
+    }
+    # get the target column value in row i and
+    # converts it to type character
+    cell_val <- as.character(ord_df[i, ind_col])
+    # check for row i if there is a "key" corresponding
+    # to the row's target column value
+    if (!hash::has.key(cell_val, targ_hash)) {
+      # if there is no key yet, initiate a "key" for the
+      # target column value and pair it with the row number
+      targ_hash[[cell_val]] <- list(i)
     } else {
-      targ_hash[[cell_val]] <- list(c(unlist(hash::values(targ_hash[cell_val])), i))
+      targ_hash[[cell_val]] <- list(
+        c(unlist(hash::values(targ_hash[cell_val])), i)
+      )
     }
   }
 
   for (key in hash::keys(targ_hash)) {
-    key_vals <- unlist(hash::values(targ_hash[key])) # gets the "value"(s) (row numbers) paired with the key
-    if (length(key_vals) < 2) {next} # checks if there is only one "value" paired with the "key" and proceeds in that case
-    num_valid <- sapply(key_vals, function(x) sum(!is.na(ord_df[x, ]))) # gets the number of valid (non-NA) elements for each row pointed to by the row number "value"s
-    top <- max(num_valid) # gets the highest number of in-row valid (non-NA) elements, looking at the rows paired with "key"
-    most_valid <- key_vals[num_valid == top] # gets the row number(numbers, in case of a tie) with the highest number of in-row valid elements
+    # get the "value"(s) (row numbers) paired with the key
+    key_vals <- unlist(hash::values(targ_hash[key]))
+    # check if there is only one "value" paired with the
+    # "key" and proceeds in that case
+    if (length(key_vals) < 2) {
+      next
+    }
+    # get the number of valid (non-NA) elements for each
+    # row pointed to by the row number "value"s
+    num_valid <- sapply(key_vals, function(x) sum(!is.na(ord_df[x, ])))
+    # get the highest number of in-row valid (non-NA) elements,
+    # looking at the rows paired with "key"
+    top <- max(num_valid)
+    # get the row number(numbers, in case of a tie) with the
+    # highest number of in-row valid elements
+    most_valid <- key_vals[num_valid == top]
+    # in case of a tie, keep the first row number if keep_last set to FALSE
     if (length(most_valid) > 1) {
       if (keep_last == FALSE) {
-        most_valid <- most_valid[1] # in case of a tie, keeps the first row number if keep_last set to FALSE
-      } else {most_valid <- most_valid[length(most_valid)]} # in case of a tie, keeps the last row number if keep_last set to TRUE
+        most_valid <- most_valid[1]
+      } else {
+        # in case of a tie, keeps the last row number if keep_last set to TRUE
+        most_valid <- most_valid[length(most_valid)]
+      }
     }
-    targ_hash[[key]] <- list(most_valid) # replaces the "value"(s) paired with the "key" with only one row number, from most_valid
+    # replaces the "value"(s) paired with the "key" with
+    # only one row number, from most_valid
+    targ_hash[[key]] <- list(most_valid)
   }
 
   keep_rows <- c(unlist(hash::values(targ_hash), use.names = FALSE), na_rows)
 
-  out_df <- ord_df[keep_rows,]
+  out_df <- ord_df[keep_rows, ]
   out_df <- out_df[order(out_df$keepord), ]
   return(subset(out_df, select = -keepord))
 }

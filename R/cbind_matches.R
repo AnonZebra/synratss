@@ -29,12 +29,10 @@ cbind_matches <- function(df1, df2, ind_col) {
   iso_df1 <- ord_df1[, ind_col] %in% ord_df2[, ind_col]
   iso_df2 <- ord_df2[, ind_col] %in% ord_df1[, ind_col]
 
-  ind_pos1 <- which(colnames(df1)==ind_col)
+  ind_pos1 <- which(colnames(df1) == ind_col)
 
   res <- cbind(ord_df1[iso_df1, ], ord_df2[iso_df2, ])
   res <- res[, -ind_pos1]
 
   return(res)
 }
-
-

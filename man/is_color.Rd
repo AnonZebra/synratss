@@ -22,7 +22,8 @@ is_color(hex, col = NULL, r = NULL, g = NULL, b = NULL)
 Checks if a hexadecimal color value codes for a color
 within a specified color range. Color range is specified using EITHER col OR
 r/g/b arguments. Possible col specifications are: "blue", "red", "green",
-"white", "black" or "hazy". r/g/b each take a two-value numeric vector providing
+"white", "black" or "hazy". r/g/b each take a
+two-value numeric vector providing
 specifications of minimum/maximum red/green/blue values within the
 range 0-255 (e.g. c(20, 230) ).
 }

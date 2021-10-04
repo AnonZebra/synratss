@@ -10,7 +10,8 @@ pnr_to_bdate(pnr)
 \item{pnr}{a string/character value with a single personal number}
 }
 \description{
-Converts Swedish personal numbers (in the format "YYYYMMDD-XXXX",
+Converts Swedish personal numbers (in the format
+"YYYYMMDD-XXXX",
 or "YYMMDD-XXXX") to birth dates. If the personal number is in the format
 "YYMMDD-XXXX", the function assumes that all YY values above 25 indicate
 someone born in the 1900's.

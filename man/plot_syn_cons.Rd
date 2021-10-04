@@ -14,7 +14,8 @@ plot_syn_cons(
 )
 }
 \arguments{
-\item{ddf}{named single-row array/matrix of mean difference between response colors.}
+\item{ddf}{named single-row array/matrix of mean
+difference between response colors.}
 
 \item{hexcolors}{data frame with hexadecimal color codes for responses
 for all graphemes}
@@ -25,10 +26,13 @@ for all graphemes}
 can save it to a variable. defaults to FALSE}
 
 \item{category_lines:}{if TRUE, plots include lines representing the mean
-consistency score per category (digits, single letters, graphemes made up of multiple characters)}
+consistency score per category (digits, single letters,
+graphemes made up of multiple characters)}
 
-\item{multi_char_category:}{only relevant if category_lines set to TRUE. then, if TRUE,
-plots include a line representing mean for graphemes made up of multiple characters}
+\item{multi_char_category:}{only relevant if category_lines
+set to TRUE. then, if TRUE,
+plots include a line representing mean for
+graphemes made up of multiple characters}
 }
 \description{
 Creates (inducer ; response variation score) bar plots for data

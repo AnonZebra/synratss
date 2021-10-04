@@ -2,12 +2,14 @@
 % Please edit documentation in R/plot_syn_cons_swe.R
 \name{plot_syn_cons_swe}
 \alias{plot_syn_cons_swe}
-\title{Plot consistency scores and responses by synesthetic inducer (Swe ver.)}
+\title{Plot consistency scores and
+responses by synesthetic inducer (Swe ver.)}
 \usage{
 plot_syn_cons_swe(ddf, hexcolors, savepath = NULL, tovar = FALSE)
 }
 \arguments{
-\item{ddf}{vector/single-row array of mean difference between response colors.}
+\item{ddf}{vector/single-row array of mean
+difference between response colors.}
 
 \item{hexcolors}{data frame with hexadecimal color codes for responses
 for all graphemes}

@@ -13,6 +13,6 @@
 #' @export
 
 dist_sum <- function(x, method = "euclidean") {
-  item.score <- sum(dist(t(x), method = method))
-  return(item.score)
+  item_score <- sum(dist(t(x), method = method))
+  return(item_score)
 }

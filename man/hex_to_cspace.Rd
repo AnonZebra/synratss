@@ -7,14 +7,16 @@
 hex_to_cspace(hexcobj, fmt = "sRGB")
 }
 \arguments{
-\item{hexcobj}{a data frame (single row) or character vector with hexadecimal color values}
+\item{hexcobj}{a data frame (single row) or
+character vector with hexadecimal color values}
 
 \item{fmt}{specifies color axes/output format ("sRGB", "Luv", "Lab").
 note that output sRGB values are on the scale 0-1}
 }
 \description{
 Converts hexadecimal color specifications to different
-color-space representations, where columns represent different responses/colors,
+color-space representations, where columns
+represent different responses/colors,
 and each row represents one color axis (e.g. R-G-B)
 }
 \seealso{
